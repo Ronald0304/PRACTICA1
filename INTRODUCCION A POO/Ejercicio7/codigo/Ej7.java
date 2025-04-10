@@ -5,49 +5,44 @@
 //c) Muestra el porcentaje de batería restante
 //d) Cuando la batería se acabe al tratar de utilizar el celular este debe mostrar el mensaje de celular apagado
 import java.util.ArrayList;
+import java.util.HashMap;
 
-class Aplicacion {
-    String nombre;
-    int tamaño;
+public class Celular {
+    int espacio_total = 1024;
+    int max_apps = 20;
+    double bateria = 100.0;
+    ArrayList<HashMap<String, Object>> aplicaciones = new ArrayList<>();
+    int espacio_ocupado = 0;
 
-    public Aplicacion(String nombre, int tamaño) {
-        this.nombre = nombre;
-        this.tamaño = tamaño;
-    }
-}
-
-class Celular {
-    private int espacioTotal = 1024;
-    private int maxApps = 20;
-    private double bateria = 100.0;
-    private ArrayList<Aplicacion> aplicaciones = new ArrayList<>();
-    private int espacioOcupado = 0;
-
-    public void instalarAplicacion(String nombre, int tamaño) {
-        if (aplicaciones.size() >= maxApps) {
+    public void instalar_aplicacion(String nombre, int tamano) {
+        if (aplicaciones.size() >= max_apps) {
             System.out.println("No se pueden instalar más aplicaciones (límite alcanzado).");
             return;
         }
 
-        if (espacioOcupado + tamaño > espacioTotal) {
+        if (espacio_ocupado + tamano > espacio_total) {
             System.out.println("No hay suficiente espacio para instalar esta aplicación.");
             return;
         }
 
-        aplicaciones.add(new Aplicacion(nombre, tamaño));
-        espacioOcupado += tamaño;
+        HashMap<String, Object> app = new HashMap<>();
+        app.put("nombre", nombre);
+        app.put("tamaño", tamano);
+        aplicaciones.add(app);
+        espacio_ocupado += tamano;
+
         System.out.println("Aplicación '" + nombre + "' instalada correctamente.");
     }
 
-    public void usarAplicacion(String nombre, int minutos) {
+    public void usar_aplicacion(String nombre, int minutos) {
         if (bateria <= 0) {
             System.out.println("Celular apagado.");
             return;
         }
 
-        Aplicacion app = null;
-        for (Aplicacion a : aplicaciones) {
-            if (a.nombre.equals(nombre)) {
+        HashMap<String, Object> app = null;
+        for (HashMap<String, Object> a : aplicaciones) {
+            if (a.get("nombre").equals(nombre)) {
                 app = a;
                 break;
             }
@@ -58,45 +53,46 @@ class Celular {
             return;
         }
 
-        int consumoPor10;
-        if (app.tamaño > 250) {
-            consumoPor10 = 5;
-        } else if (app.tamaño > 100) {
-            consumoPor10 = 2;
+        int tamano = (int) app.get("tamano");
+        int consumo_por_10;
+        if (tamano > 250) {
+            consumo_por_10 = 5;
+        } else if (tamano > 100) {
+            consumo_por_10 = 2;
         } else {
-            consumoPor10 = 1;
+            consumo_por_10 = 1;
         }
 
-        int bloques10Min = minutos / 10;
-        double consumoTotal = bloques10Min * consumoPor10;
+        int bloques_10_min = minutos / 10;
+        double consumo_total = bloques_10_min * consumo_por_10;
 
-        bateria -= consumoTotal;
+        bateria -= consumo_total;
         if (bateria <= 0) {
             bateria = 0;
             System.out.println("La batería se ha agotado. Celular apagado.");
         } else {
-            System.out.printf("Usaste la aplicación '%s' por %d minutos. Batería actual: %.2f%%%n",
-                              nombre, minutos, bateria);
+            System.out.printf("Usaste la aplicación '%s' por %d minutos. Batería actual: %.2f%%%n", nombre, minutos, bateria);
         }
     }
 
-    public void mostrarBateria() {
+    public void mostrar_bateria() {
         System.out.printf("Batería restante: %.2f%%%n", bateria);
     }
 
     public static void main(String[] args) {
         Celular cel = new Celular();
 
-        cel.instalarAplicacion("WhatsApp", 150);
-        cel.instalarAplicacion("Instagram", 300);
-        cel.instalarAplicacion("Notas", 50);
+        cel.instalar_aplicacion("WhatsApp", 150);
+        cel.instalar_aplicacion("Instagram", 300);
+        cel.instalar_aplicacion("Notas", 50);
 
-        cel.mostrarBateria();
+        cel.mostrar_bateria();
 
-        cel.usarAplicacion("Instagram", 30);
-        cel.usarAplicacion("Notas", 20);
-        cel.usarAplicacion("WhatsApp", 40);
+        cel.usar_aplicacion("Instagram", 30); 
+        cel.usar_aplicacion("Notas", 20);    
+        cel.usar_aplicacion("WhatsApp", 40);   
 
-        cel.mostrarBateria();
+        cel.mostrar_bateria();
     }
 }
+
