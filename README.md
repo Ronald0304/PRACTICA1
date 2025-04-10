@@ -1,1 +1,5 @@
-# PRACTICA1
+# PRACTICA1-INF-121
+#------------------------------------
+# NOMBRE: RONALD PAUL GUTIERREZ MAMANI
+# CI: 8311043
+# RU: 1855853
