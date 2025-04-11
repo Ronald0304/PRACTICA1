@@ -6,52 +6,58 @@ from multimethod import multimethod
 
 class Perro:
     def __init__(self, nombre: str, edad: int, raza: str):
-        self.nombre = nombre
-        self.edad = edad
-        self.raza = raza
+        self.__nombre = nombre
+        self.__edad = edad
+        self.__raza = raza
+
+    def get_nombre(self):
+        return self.__nombre
 
 class Gato:
     def __init__(self, nombre: str, color: str):
-        self.nombre = nombre
-        self.color = color
+        self.__nombre = nombre
+        self.__color = color
+
+    def get_nombre(self):
+        return self.__nombre
 
 class Pajaro:
     def __init__(self, nombre: str, tipo: str):
-        self.nombre = nombre
-        self.tipo = tipo
+        self.__nombre = nombre
+        self.__tipo = tipo
 
+    def get_nombre(self):
+        return self.__nombre
 
 perro = Perro("Firulais", 5, "Labrador")
 gato = Gato("Michi", "Negro")
 pajaro = Pajaro("Piolín", "Canario")
 
-
 @multimethod
 def hacerSonido(animal: Perro):
-    print(f"{animal.nombre} dice: ¡Guau guau!")
+    print(f"{animal.get_nombre()} dice: ¡Guau guau!")
 
 @multimethod
 def hacerSonido(animal: Gato):
-    print(f"{animal.nombre} dice: ¡Miau!")
+    print(f"{animal.get_nombre()} dice: ¡Miau!")
 
 @multimethod
 def hacerSonido(animal: Pajaro):
-    print(f"{animal.nombre} dice: ¡Pío pío!")
-
+    print(f"{animal.get_nombre()} dice: ¡Pío pío!")
 
 @multimethod
 def moverse(animal: Perro):
-    print(f"{animal.nombre} corre en el parque.")
+    print(f"{animal.get_nombre()} corre en el parque.")
 
 @multimethod
 def moverse(animal: Gato):
-    print(f"{animal.nombre} salta por los tejados.")
+    print(f"{animal.get_nombre()} salta por los tejados.")
 
 @multimethod
 def moverse(animal: Pajaro):
-    print(f"{animal.nombre} vuela por el cielo.")
+    print(f"{animal.get_nombre()} vuela por el cielo.")
 
-print(" -----SONIDOS ----")
+print("----- SONIDOS -----")
 hacerSonido(perro)
 hacerSonido(gato)
 hacerSonido(pajaro)
