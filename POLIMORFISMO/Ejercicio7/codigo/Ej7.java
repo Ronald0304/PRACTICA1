@@ -2,7 +2,7 @@
 //a) Instanciar 1 Perro, 1 Gato y 1 Pájaro. 
 //b) Sobrecargar el método hacerSonido() para que cada animal emita su sonido característico. 
 //c) Implementar un método moverse() que indique cómo se mueve cada animal (correr, saltar, volar, etc.).
-public class Perro {
+class Perro {
     private String nombre;
     private int edad;
     private String raza;
@@ -13,12 +13,16 @@ public class Perro {
         this.raza = raza;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void hacerSonido() {
+        System.out.println(nombre + " dice: ¡Guau!");
+    }
+
+    public void moverse() {
+        System.out.println(nombre + " corre.");
     }
 }
 
-public class Gato {
+class Gato {
     private String nombre;
     private String color;
 
@@ -27,12 +31,16 @@ public class Gato {
         this.color = color;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void hacerSonido() {
+        System.out.println(nombre + " dice: ¡Miau!");
+    }
+
+    public void moverse() {
+        System.out.println(nombre + " salta.");
     }
 }
 
-public class Pajaro {
+class Pajaro {
     private String nombre;
     private String tipo;
 
@@ -41,49 +49,30 @@ public class Pajaro {
         this.tipo = tipo;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void hacerSonido() {
+        System.out.println(nombre + " dice: ¡Pío!");
+    }
+
+    public void moverse() {
+        System.out.println(nombre + " vuela.");
     }
 }
-public class AnimalesTest {
 
-    public static void hacerSonido(Perro p) {
-        System.out.println(p.getNombre() + " dice: ¡Guau guau!");
-    }
-
-    public static void hacerSonido(Gato g) {
-        System.out.println(g.getNombre() + " dice: ¡Miau!");
-    }
-
-    public static void hacerSonido(Pajaro pa) {
-        System.out.println(pa.getNombre() + " dice: ¡Pío pío!");
-    }
-
-    public static void moverse(Perro p) {
-        System.out.println(p.getNombre() + " corre en el parque.");
-    }
-
-    public static void moverse(Gato g) {
-        System.out.println(g.getNombre() + " salta por los tejados.");
-    }
-
-    public static void moverse(Pajaro pa) {
-        System.out.println(pa.getNombre() + " vuela por el cielo.");
-    }
-
+public class Main {
     public static void main(String[] args) {
-        Perro perro = new Perro("Firulais", 5, "Labrador");
-        Gato gato = new Gato("Michi", "Negro");
+        Perro perro = new Perro("Firulais", 3, "Labrador");
+        Gato gato = new Gato("Michi", "Blanco");
         Pajaro pajaro = new Pajaro("Piolín", "Canario");
 
-        System.out.println("== SONIDOS ==");
-        hacerSonido(perro);
-        hacerSonido(gato);
-        hacerSonido(pajaro);
+        System.out.println("----- Sonidos -----");
+        perro.hacerSonido();
+        gato.hacerSonido();
+        pajaro.hacerSonido();
 
-        System.out.println("\n== MOVIMIENTOS ==");
-        moverse(perro);
-        moverse(gato);
-        moverse(pajaro);
+        System.out.println("\n----- Movimientos -----");
+        perro.moverse();
+        gato.moverse();
+        pajaro.moverse();
     }
 }
+
