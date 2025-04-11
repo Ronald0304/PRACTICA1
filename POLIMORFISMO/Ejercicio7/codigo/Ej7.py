@@ -2,67 +2,54 @@
 #a) Instanciar 1 Perro, 1 Gato y 1 Pájaro. 
 #b) Sobrecargar el método hacerSonido() para que cada animal emita su sonido característico. 
 #c) Implementar un método moverse() que indique cómo se mueve cada animal (correr, saltar, volar, etc.). 
-from multimethod import multimethod
-
 class Perro:
-    def __init__(self, nombre: str, edad: int, raza: str):
-        self.__nombre = nombre
-        self.__edad = edad
-        self.__raza = raza
+    def __init__(self, nombre, edad, raza):
+        self.nombre = nombre
+        self.edad = edad
+        self.raza = raza
 
-    def get_nombre(self):
-        return self.__nombre
+    def hacer_sonido(self):
+        print(f"{self.nombre} dice: ¡Guau!")
+
+    def moverse(self):
+        print(f"{self.nombre} corre.")
+
 
 class Gato:
-    def __init__(self, nombre: str, color: str):
-        self.__nombre = nombre
-        self.__color = color
+    def __init__(self, nombre, color):
+        self.nombre = nombre
+        self.color = color
 
-    def get_nombre(self):
-        return self.__nombre
+    def hacer_sonido(self):
+        print(f"{self.nombre} dice: ¡Miau!")
+
+    def moverse(self):
+        print(f"{self.nombre} salta.")
+
 
 class Pajaro:
-    def __init__(self, nombre: str, tipo: str):
-        self.__nombre = nombre
-        self.__tipo = tipo
+    def __init__(self, nombre, tipo):
+        self.nombre = nombre
+        self.tipo = tipo
 
-    def get_nombre(self):
-        return self.__nombre
+    def hacer_sonido(self):
+        print(f"{self.nombre} dice: ¡Pío!")
 
-perro = Perro("Firulais", 5, "Labrador")
-gato = Gato("Michi", "Negro")
-pajaro = Pajaro("Piolín", "Canario")
+    def moverse(self):
+        print(f"{self.nombre} vuela.")
 
-@multimethod
-def hacerSonido(animal: Perro):
-    print(f"{animal.get_nombre()} dice: ¡Guau guau!")
 
-@multimethod
-def hacerSonido(animal: Gato):
-    print(f"{animal.get_nombre()} dice: ¡Miau!")
+if __name__ == "__main__":
+    perro = Perro("Firulais", 3, "Labrador")
+    gato = Gato("Michi", "Blanco")
+    pajaro = Pajaro("Piolín", "Canario")
 
-@multimethod
-def hacerSonido(animal: Pajaro):
-    print(f"{animal.get_nombre()} dice: ¡Pío pío!")
+    print("----- Sonidos -----")
+    perro.hacer_sonido()
+    gato.hacer_sonido()
+    pajaro.hacer_sonido()
 
-@multimethod
-def moverse(animal: Perro):
-    print(f"{animal.get_nombre()} corre en el parque.")
-
-@multimethod
-def moverse(animal: Gato):
-    print(f"{animal.get_nombre()} salta por los tejados.")
-
-@multimethod
-def moverse(animal: Pajaro):
-    print(f"{animal.get_nombre()} vuela por el cielo.")
-
-print("----- SONIDOS -----")
-hacerSonido(perro)
-hacerSonido(gato)
-hacerSonido(pajaro)
-
-print("\n----- MOVIMIENTOS -----")
-moverse(perro)
-moverse(gato)
-moverse(pajaro)
+    print("\n----- Movimientos -----")
+    perro.moverse()
+    gato.moverse()
+    pajaro.moverse()
