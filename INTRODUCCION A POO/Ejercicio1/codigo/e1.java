@@ -4,9 +4,9 @@
 //c) Agrega un método para verificar si es mayor de edad
 
 public class Persona {
-    private String nombre;
-    private int edad;
-    private String ciudad;
+    public String nombre;
+    public int edad;
+    public String ciudad;
 
     public Persona(String nombre, int edad, String ciudad) {
         this.nombre = nombre;
@@ -35,5 +35,6 @@ public class Persona {
         persona1.medad();
         persona2.saludo();
         persona3.saludo();
+        persona3.medad(); 
     }
 }
