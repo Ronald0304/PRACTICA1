@@ -5,59 +5,47 @@
 //c) Muestra el porcentaje de batería restante
 //d) Cuando la batería se acabe al tratar de utilizar el celular este debe mostrar el mensaje de celular apagado
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Celular {
-    int espacio_total = 1024;
-    int max_apps = 20;
-    double bateria = 100.0;
-    ArrayList<HashMap<String, Object>> aplicaciones = new ArrayList<>();
-    int espacio_ocupado = 0;
+    public int espacio_total = 1024;
+    public int max_apps = 20;
+    public double bateria = 100.0;
+    public ArrayList<Aplicacion> aplicaciones = new ArrayList<>();
+    public int espacio_ocupado = 0;
 
-    public void instalar_aplicacion(String nombre, int tamano) {
+    public void instalarAplicacion(String nombre, int tamaño) {
         if (aplicaciones.size() >= max_apps) {
             System.out.println("No se pueden instalar más aplicaciones (límite alcanzado).");
             return;
         }
 
-        if (espacio_ocupado + tamano > espacio_total) {
+        if (espacio_ocupado + tamaño > espacio_total) {
             System.out.println("No hay suficiente espacio para instalar esta aplicación.");
             return;
         }
 
-        HashMap<String, Object> app = new HashMap<>();
-        app.put("nombre", nombre);
-        app.put("tamaño", tamano);
-        aplicaciones.add(app);
-        espacio_ocupado += tamano;
-
+        aplicaciones.add(new Aplicacion(nombre, tamaño));
+        espacio_ocupado += tamaño;
         System.out.println("Aplicación '" + nombre + "' instalada correctamente.");
     }
 
-    public void usar_aplicacion(String nombre, int minutos) {
+    public void usarAplicacion(String nombre, int minutos) {
         if (bateria <= 0) {
             System.out.println("Celular apagado.");
             return;
         }
 
-        HashMap<String, Object> app = null;
-        for (HashMap<String, Object> a : aplicaciones) {
-            if (a.get("nombre").equals(nombre)) {
-                app = a;
-                break;
-            }
-        }
-
+        Aplicacion app = buscarAplicacion(nombre);
         if (app == null) {
             System.out.println("La aplicación '" + nombre + "' no está instalada.");
             return;
         }
 
-        int tamano = (int) app.get("tamano");
+        int tamaño = app.tamaño;
         int consumo_por_10;
-        if (tamano > 250) {
+        if (tamaño > 250) {
             consumo_por_10 = 5;
-        } else if (tamano > 100) {
+        } else if (tamaño > 100) {
             consumo_por_10 = 2;
         } else {
             consumo_por_10 = 1;
@@ -75,24 +63,44 @@ public class Celular {
         }
     }
 
-    public void mostrar_bateria() {
+    public void mostrarBateria() {
         System.out.printf("Batería restante: %.2f%%%n", bateria);
+    }
+
+    private Aplicacion buscarAplicacion(String nombre) {
+        for (Aplicacion app : aplicaciones) {
+            if (app.nombre.equals(nombre)) {
+                return app;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {
         Celular cel = new Celular();
 
-        cel.instalar_aplicacion("WhatsApp", 150);
-        cel.instalar_aplicacion("Instagram", 300);
-        cel.instalar_aplicacion("Notas", 50);
+        cel.instalarAplicacion("WhatsApp", 150);
+        cel.instalarAplicacion("Instagram", 300);
+        cel.instalarAplicacion("Notas", 50);
 
-        cel.mostrar_bateria();
+        cel.mostrarBateria();
 
-        cel.usar_aplicacion("Instagram", 30); 
-        cel.usar_aplicacion("Notas", 20);    
-        cel.usar_aplicacion("WhatsApp", 40);   
+        cel.usarAplicacion("Instagram", 30);
+        cel.usarAplicacion("Notas", 20);
+        cel.usarAplicacion("WhatsApp", 40);
 
-        cel.mostrar_bateria();
+        cel.mostrarBateria();
+    }
+
+    class Aplicacion {
+        public String nombre;
+        public int tamaño;
+
+        public Aplicacion(String nombre, int tamaño) {
+            this.nombre = nombre;
+            this.tamaño = tamaño;
+        }
     }
 }
+
 
