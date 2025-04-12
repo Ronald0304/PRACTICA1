@@ -2,41 +2,58 @@
 #a) Instanciar 1 Perro, 1 Gato y 1 Pájaro. 
 #b) Sobrecargar el método hacerSonido() para que cada animal emita su sonido característico. 
 #c) Implementar un método moverse() que indique cómo se mueve cada animal (correr, saltar, volar, etc.). 
+from multimethod import multimethod
+
 class Perro:
     def __init__(self, nombre, edad, raza):
-        self.nombre = nombre
-        self.edad = edad
-        self.raza = raza
+        self._nombre = nombre
+        self._edad = edad
+        self._raza = raza
 
-    def hacer_sonido(self):
-        print(f"{self.nombre} dice: ¡Guau!")
+    @multimethod
+    def hacerSonido(self):
+        print(f"{self._nombre} dice: ¡Guau!")
+
+    @multimethod
+    def hacerSonido(self, sonido: str):
+        print(f"{self._nombre} dice: {sonido}")
 
     def moverse(self):
-        print(f"{self.nombre} corre.")
+        print(f"{self._nombre} corre.")
 
 
 class Gato:
     def __init__(self, nombre, color):
-        self.nombre = nombre
-        self.color = color
+        self._nombre = nombre
+        self._color = color
 
-    def hacer_sonido(self):
-        print(f"{self.nombre} dice: ¡Miau!")
+    @multimethod
+    def hacerSonido(self):
+        print(f"{self._nombre} dice: ¡Miau!")
+
+    @multimethod
+    def hacerSonido(self, sonido: str):
+        print(f"{self._nombre} dice: {sonido}")
 
     def moverse(self):
-        print(f"{self.nombre} salta.")
+        print(f"{self._nombre} salta.")
 
 
 class Pajaro:
     def __init__(self, nombre, tipo):
-        self.nombre = nombre
-        self.tipo = tipo
+        self._nombre = nombre
+        self._tipo = tipo
 
-    def hacer_sonido(self):
-        print(f"{self.nombre} dice: ¡Pío!")
+    @multimethod
+    def hacerSonido(self):
+        print(f"{self._nombre} dice: ¡Pío!")
+
+    @multimethod
+    def hacerSonido(self, sonido: str):
+        print(f"{self._nombre} dice: {sonido}")
 
     def moverse(self):
-        print(f"{self.nombre} vuela.")
+        print(f"{self._nombre} vuela.")
 
 
 if __name__ == "__main__":
@@ -45,9 +62,12 @@ if __name__ == "__main__":
     pajaro = Pajaro("Piolín", "Canario")
 
     print("----- Sonidos -----")
-    perro.hacer_sonido()
-    gato.hacer_sonido()
-    pajaro.hacer_sonido()
+    perro.hacerSonido()  
+    perro.hacerSonido("¡Guau Guau!")  
+    gato.hacerSonido() 
+    gato.hacerSonido("¡Miau Miau!")  
+    pajaro.hacerSonido()  
+    pajaro.hacerSonido("¡Pío Pío!")  
 
     print("\n----- Movimientos -----")
     perro.moverse()
