@@ -6,86 +6,94 @@
 from multimethod import multimethod
 
 class BloqueCofre:
-    def __init__(self, capacidad: int, resistencia: int, tipo: str):
-        self.__capacidad = capacidad
-        self.__resistencia = resistencia
-        self.__tipo = tipo
+    def __init__(self, capacidad, resistencia, tipo):
+        self._capacidad = capacidad
+        self._resistencia = resistencia
+        self._tipo = tipo
 
-    def get_tipo(self):
-        return self.__tipo
+    def accion(self):
+        print(f"Abriste el cofre de tipo {self._tipo}. Puedes guardar objetos.")
+
+    @multimethod
+    def colocar(self, orientacion: str):
+        print(f"Colocaste el cofre orientado hacia {orientacion}.")
+
+    @multimethod
+    def colocar(self, orientacion: str, altura: int):
+        print(f"Colocaste el cofre orientado hacia {orientacion} a una altura de {altura}.")
+
+    def romper(self):
+        print("El cofre se ha roto. Los objetos caen al suelo.")
+
 
 class BloqueTnt:
-    def __init__(self, tipo: str, daño: int):
-        self.__tipo = tipo
-        self.__daño = daño
+    def __init__(self, tipo, daño):
+        self._tipo = tipo
+        self._daño = daño
 
-    def get_tipo(self):
-        return self.__tipo
+    def accion(self):
+        print(f"Activaste la TNT de tipo {self._tipo}. ¡Cuidado con la explosión!")
+
+    @multimethod
+    def colocar(self, orientacion: str):
+        print(f"Colocaste la TNT en la orientación: {orientacion}.")
+
+    @multimethod
+    def colocar(self, orientacion: str, altura: int):
+        print(f"Colocaste la TNT en la orientación: {orientacion} a una altura de {altura}.")
+
+    def romper(self):
+        print("¡La TNT explotó al romperse!")
+
 
 class BloqueHorno:
-    def __init__(self, color: str, capacidadComida: int):
-        self.__color = color
-        self.__capacidadComida = capacidadComida
+    def __init__(self, color, capacidad_comida):
+        self._color = color
+        self._capacidad_comida = capacidad_comida
 
-    def get_color(self):
-        return self.__color
+    def accion(self):
+        print(f"Encendiste el horno {self._color}. Puedes cocinar hasta {self._capacidad_comida} alimentos.")
 
-cofre1 = BloqueCofre(27, 10, "Cofre grande")
-cofre2 = BloqueCofre(15, 7, "Cofre pequeño")
+    @multimethod
+    def colocar(self, orientacion: str):
+        print(f"Colocaste el horno en la orientación: {orientacion}.")
 
-tnt1 = BloqueTnt("TNT normal", 100)
-tnt2 = BloqueTnt("TNT mega", 300)
+    @multimethod
+    def colocar(self, orientacion: str, altura: int):
+        print(f"Colocaste el horno en la orientación: {orientacion} a una altura de {altura}.")
 
-horno1 = BloqueHorno("Gris", 3)
-horno2 = BloqueHorno("Negro", 6)
+    def romper(self):
+        print("El horno se rompió. Se pierde la comida cocinándose.")
 
-@multimethod
-def accion(bloque: BloqueCofre):
-    print(f"Abriste un {bloque.get_tipo()} para guardar objetos.")
 
-@multimethod
-def accion(bloque: BloqueTnt):
-    print(f"Encendiste {bloque.get_tipo()}... ¡BOOM!")
+if __name__ == "__main__":
+    cofre1 = BloqueCofre(30, 50, "Roble")
+    cofre2 = BloqueCofre(40, 60, "Abeto")
 
-@multimethod
-def accion(bloque: BloqueHorno):
-    print(f"Usaste un horno {bloque.get_color()} para cocinar comida.")
+    tnt1 = BloqueTnt("Clásica", 100)
+    tnt2 = BloqueTnt("Mega", 200)
 
-@multimethod
-def colocar(bloque: BloqueCofre):
-    print(f"{bloque.get_tipo()} colocado en el suelo.")
+    horno1 = BloqueHorno("Negro", 5)
+    horno2 = BloqueHorno("Gris", 8)
 
-@multimethod
-def colocar(bloque: BloqueTnt):
-    print(f"{bloque.get_tipo()} colocado en la pared con cuidado.")
+    print("----- ACCIONES -----")
+    cofre1.accion()
+    cofre2.accion()
+    tnt1.accion()
+    tnt2.accion()
+    horno1.accion()
+    horno2.accion()
 
-@multimethod
-def colocar(bloque: BloqueHorno):
-    print(f"Horno {bloque.get_color()} colocado junto a una mesa de trabajo.")
+    print("\n----- COLOCAR -----")
+    cofre1.colocar("norte")
+    cofre1.colocar("norte", 5)
+    tnt1.colocar("suelo")
+    tnt1.colocar("suelo", 3)
+    horno1.colocar("pared")
+    horno1.colocar("pared", 2)
 
-@multimethod
-def romper(bloque: BloqueCofre):
-    print(f"El {bloque.get_tipo()} se rompió y soltó sus objetos.")
+    print("\n----- ROMPER -----")
+    cofre2.romper()
+    tnt2.romper()
+    horno2.romper()
 
-@multimethod
-def romper(bloque: BloqueTnt):
-    print(f"¡Cuidado! Romper {bloque.get_tipo()} lo hace explotar.")
-
-@multimethod
-def romper(bloque: BloqueHorno):
-    print(f"Horno {bloque.get_color()} roto. Ya no puedes cocinar con él.")
-
-print("----- ACCIONES -----")
-accion(cofre1)
-accion(tnt1)
-accion(horno1)
-
-print("\n----- COLOCAR -----")
-colocar(cofre2)
-colocar(tnt2)
-colocar(horno2)
-
-print("\n----- ROMPER -----")
-romper(cofre1)
-romper(tnt2)
-romper(horno1)
