@@ -22,6 +22,10 @@ class BloqueCofre {
         System.out.println("Colocaste el cofre orientado hacia " + orientacion + ".");
     }
 
+    public void colocar(String orientacion, int altura) {
+        System.out.println("Colocaste el cofre orientado hacia " + orientacion + " a una altura de " + altura + ".");
+    }
+
     public void romper() {
         System.out.println("El cofre se ha roto. Los objetos caen al suelo.");
     }
@@ -44,6 +48,10 @@ class BloqueTnt {
         System.out.println("Colocaste la TNT en la orientación: " + orientacion + ".");
     }
 
+    public void colocar(String orientacion, int altura) {
+        System.out.println("Colocaste la TNT en la orientación: " + orientacion + " a una altura de " + altura + ".");
+    }
+
     public void romper() {
         System.out.println("¡La TNT explotó al romperse!");
     }
@@ -51,19 +59,23 @@ class BloqueTnt {
 
 class BloqueHorno {
     private String color;
-    private int capacidadComida;
+    private int capacidad_comida;
 
-    public BloqueHorno(String color, int capacidadComida) {
+    public BloqueHorno(String color, int capacidad_comida) {
         this.color = color;
-        this.capacidadComida = capacidadComida;
+        this.capacidad_comida = capacidad_comida;
     }
 
     public void accion() {
-        System.out.println("Encendiste el horno " + color + ". Puedes cocinar hasta " + capacidadComida + " alimentos.");
+        System.out.println("Encendiste el horno " + color + ". Puedes cocinar hasta " + capacidad_comida + " alimentos.");
     }
 
     public void colocar(String orientacion) {
         System.out.println("Colocaste el horno en la orientación: " + orientacion + ".");
+    }
+
+    public void colocar(String orientacion, int altura) {
+        System.out.println("Colocaste el horno en la orientación: " + orientacion + " a una altura de " + altura + ".");
     }
 
     public void romper() {
@@ -92,8 +104,11 @@ public class Main {
 
         System.out.println("\n----- COLOCAR -----");
         cofre1.colocar("norte");
+        cofre1.colocar("norte", 5);
         tnt1.colocar("suelo");
+        tnt1.colocar("suelo", 3);
         horno1.colocar("pared");
+        horno1.colocar("pared", 2);
 
         System.out.println("\n----- ROMPER -----");
         cofre2.romper();
@@ -101,3 +116,4 @@ public class Main {
         horno2.romper();
     }
 }
+
