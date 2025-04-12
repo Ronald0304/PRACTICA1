@@ -10,11 +10,12 @@ public class Celular {
     public int espacio_total = 1024;
     public int max_apps = 20;
     public double bateria = 100.0;
-    public ArrayList<Aplicacion> aplicaciones = new ArrayList<>();
+    public ArrayList<String> nombresAplicaciones = new ArrayList<>();
+    public ArrayList<Integer> tamaniosAplicaciones = new ArrayList<>();
     public int espacio_ocupado = 0;
 
     public void instalarAplicacion(String nombre, int tamaño) {
-        if (aplicaciones.size() >= max_apps) {
+        if (nombresAplicaciones.size() >= max_apps) {
             System.out.println("No se pueden instalar más aplicaciones (límite alcanzado).");
             return;
         }
@@ -24,7 +25,8 @@ public class Celular {
             return;
         }
 
-        aplicaciones.add(new Aplicacion(nombre, tamaño));
+        nombresAplicaciones.add(nombre);
+        tamaniosAplicaciones.add(tamaño);
         espacio_ocupado += tamaño;
         System.out.println("Aplicación '" + nombre + "' instalada correctamente.");
     }
@@ -35,13 +37,13 @@ public class Celular {
             return;
         }
 
-        Aplicacion app = buscarAplicacion(nombre);
-        if (app == null) {
+        int index = nombresAplicaciones.indexOf(nombre);
+        if (index == -1) {
             System.out.println("La aplicación '" + nombre + "' no está instalada.");
             return;
         }
 
-        int tamaño = app.tamaño;
+        int tamaño = tamaniosAplicaciones.get(index);
         int consumo_por_10;
         if (tamaño > 250) {
             consumo_por_10 = 5;
@@ -67,15 +69,6 @@ public class Celular {
         System.out.printf("Batería restante: %.2f%%%n", bateria);
     }
 
-    private Aplicacion buscarAplicacion(String nombre) {
-        for (Aplicacion app : aplicaciones) {
-            if (app.nombre.equals(nombre)) {
-                return app;
-            }
-        }
-        return null;
-    }
-
     public static void main(String[] args) {
         Celular cel = new Celular();
 
@@ -90,16 +83,6 @@ public class Celular {
         cel.usarAplicacion("WhatsApp", 40);
 
         cel.mostrarBateria();
-    }
-
-    class Aplicacion {
-        public String nombre;
-        public int tamaño;
-
-        public Aplicacion(String nombre, int tamaño) {
-            this.nombre = nombre;
-            this.tamaño = tamaño;
-        }
     }
 }
 
