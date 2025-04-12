@@ -17,6 +17,10 @@ class Perro {
         System.out.println(nombre + " dice: ¡Guau!");
     }
 
+    public void hacerSonido(String sonido) {
+        System.out.println(nombre + " dice: " + sonido);
+    }
+
     public void moverse() {
         System.out.println(nombre + " corre.");
     }
@@ -33,6 +37,10 @@ class Gato {
 
     public void hacerSonido() {
         System.out.println(nombre + " dice: ¡Miau!");
+    }
+
+    public void hacerSonido(String sonido) {
+        System.out.println(nombre + " dice: " + sonido);
     }
 
     public void moverse() {
@@ -53,6 +61,10 @@ class Pajaro {
         System.out.println(nombre + " dice: ¡Pío!");
     }
 
+    public void hacerSonido(String sonido) {
+        System.out.println(nombre + " dice: " + sonido);
+    }
+
     public void moverse() {
         System.out.println(nombre + " vuela.");
     }
@@ -65,9 +77,12 @@ public class Main {
         Pajaro pajaro = new Pajaro("Piolín", "Canario");
 
         System.out.println("----- Sonidos -----");
-        perro.hacerSonido();
-        gato.hacerSonido();
-        pajaro.hacerSonido();
+        perro.hacerSonido();  
+        perro.hacerSonido("¡Guau Guau!");  
+        gato.hacerSonido();  
+        gato.hacerSonido("¡Miau Miau!");  
+        pajaro.hacerSonido();  
+        pajaro.hacerSonido("¡Pío Pío!");  
 
         System.out.println("\n----- Movimientos -----");
         perro.moverse();
